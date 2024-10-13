@@ -8,7 +8,7 @@
             int difficulty = 4; // Number of leading zeros required in the hash
             var blockchain = new Blockchain(difficulty); // Create a new blockchain with the specified difficulty
 
-            // Add some transactions to the blockchain
+            // Add some transactions to the blocks, mining, and adding them to blockchain
             blockchain.CreateBlock(new List<string> { "Alice pays Bob 5 BTC", "Alice pays Charlie 2 BTC"});
             blockchain.CreateBlock(new List<string> { "Charlie pays Dave 1 BTC" });
             Console.WriteLine("Mining done. \n");

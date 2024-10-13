@@ -57,10 +57,9 @@ namespace BlockChainProject
                     newHashedTransactions.Add(Hash(hashedTransactions[i] + hashedTransactions[i + 1]));
                 }
 
-                /* If there's an odd number of hashed transactions, then
-                   one transaction is doubled (in here, that is the last transaction), 
-                   and its hash is concatenated with itself.
-                */
+                /* If there’s an odd number of hashed transactions, 
+                   the last hash is added to the new list without pairing it 
+                   (essentially doubling it for the next level). */
                 if (hashedTransactions.Count % 2 == 1)
                 {
                     newHashedTransactions.Add(hashedTransactions[^1]); // Use the last item if odd

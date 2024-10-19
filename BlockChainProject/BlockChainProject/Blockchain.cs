@@ -18,15 +18,15 @@ namespace BlockChainProject
         {
             chain = new List<Block>(); 
             Difficulty = difficulty;
-            CreateBlock(new List<string>()); // Create the genesis block
+            CreateBlock(new List<Transaction>()); // Create the genesis block
         }
 
         /// <summary>
         /// Creates a new block, mining it, and adding to the chain.
         /// </summary>
-        public Block CreateBlock(List<string> transactions)
+        public Block CreateBlock(List<Transaction> transactions)
         {
-            int newBlockIndex = chain.Count + 1;
+            int newBlockIndex = chain.Count;
 
             var block = new Block(newBlockIndex, LastBlockHash(), transactions, Difficulty); 
             

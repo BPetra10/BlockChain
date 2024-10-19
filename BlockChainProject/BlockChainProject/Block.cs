@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 namespace BlockChainProject
 {
@@ -15,8 +16,8 @@ namespace BlockChainProject
         public int Index { get; private set; } 
         public long Timestamp { get; private set; }
         public string BlockHash { get; private set; } 
-        public string PreviousHash { get; private set; } 
-        public List<string> Transactions { get; private set; } 
+        public string PreviousHash { get; private set; }
+        public List<Transaction> Transactions { get; private set; }
         public string MerkleRoot { get; private set; } 
         public int Nonce { get; private set; } 
         public int Difficulty { get; private set; } 
@@ -25,13 +26,13 @@ namespace BlockChainProject
         /// <summary>
         /// Initializes a new instance of the Block class.
         /// </summary>
-        public Block(int index, string previousHash, List<string> transactions, int difficulty)
+        public Block(int index, string previousHash, List<Transaction> transactions, int difficulty)
         {
             Index = index; 
             PreviousHash = previousHash; 
             Transactions = transactions; 
             Timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(); // Get current Unix timestamp
-            MerkleRoot = new MerkleTree(transactions).Root; // Compute Merkle root from transactions
+            MerkleRoot = new MerkleTree(GenerateTransactionData(transactions)).Root; ; // Build the Merkle root from transaction signatures
             Difficulty = difficulty; 
             Nonce = 0; 
             BlockHash = ""; 
@@ -75,5 +76,22 @@ namespace BlockChainProject
                 return BitConverter.ToString(bytes).Replace("-", "").ToLower();
             }
         }
+
+        /// <summary>
+        ///  Takes a list of Transaction objects and returns a list of formatted strings 
+        ///  that describe each transaction in a readable format. 
+        ///  This makes the Merkle tree building easier.
+        /// </summary>
+        /// <returns>transactionData string list.</returns>
+        private List<string> GenerateTransactionData(List<Transaction> transactions)
+        {
+            var transactionData = new List<string>();
+            foreach (var transaction in transactions)
+            {
+                transactionData.Add($"{transaction.From} pays {transaction.To} {transaction.Amount}");
+            }
+            return transactionData;
+        }
+
     }
 }

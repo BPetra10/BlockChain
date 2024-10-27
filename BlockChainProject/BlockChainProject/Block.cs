@@ -32,7 +32,7 @@ namespace BlockChainProject
             PreviousHash = previousHash; 
             Transactions = transactions; 
             Timestamp = DateTimeOffset.UtcNow.ToUnixTimeSeconds(); // Get current Unix timestamp
-            MerkleRoot = new MerkleTree(GenerateTransactionData(transactions)).Root; ; // Build the Merkle root from transaction signatures
+            MerkleRoot = new MerkleTree(GenerateTransactionData(transactions)).Root; // Build the Merkle root from transaction signatures
             Difficulty = difficulty; 
             Nonce = 0; 
             BlockHash = ""; 
